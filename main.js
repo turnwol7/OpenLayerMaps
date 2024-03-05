@@ -4,7 +4,11 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import {fromLonLat} from 'ol/proj';
 import StadiaMaps from 'ol/source/StadiaMaps.js';
+import MousePosition from 'ol/control/MousePosition.js';
+import {createStringXY} from 'ol/coordinate';
 
+
+//maps
 let basemap1 = new TileLayer({
   source: new OSM()
 });
@@ -24,9 +28,6 @@ let basemap3 = new TileLayer({
 const map = new Map({
   target: 'mainMap',
   layers: [basemap2, basemap3
-    // new TileLayer({
-    //   source: new OSM()
-    // })
   ],
   view: new View({
     //center: [-7100000, 5600000],
@@ -34,3 +35,15 @@ const map = new Map({
     zoom: 10
   })
 });
+
+const mousePositionControl = new MousePosition({
+  coordinateFormat: createStringXY(4),
+  projection: 'EPSG:4326',
+  // comment the following two lines to have the mouse position
+  // be placed within the map.
+  //className: 'custom-mouse-position',
+  target: document.getElementById('mouse-position'),
+  undefinedHTML: '&nbsp;'
+});
+
+map.addControl(mousePositionControl);
